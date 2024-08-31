@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: #4070f4;
+        }
+
+        .container {
+            position: relative;
+            max-width: 1200px;
+            width: 100%;
+            border-radius: 6px;
+            padding: 30px;
+            margin: 0 15px;
+            background-color: #fff;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+        }
+
+        .container header {
+            position: relative;
+            font-size: 20px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .container header::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -2px;
+            height: 3px;
+            width: 27px;
+            border-radius: 8px;
+            background-color: #4070f4;
+        }
+
+        .container form {
+            position: relative;
+            margin-top: 16px;
+            min-height: 550px;
+            background-color: #fff;
+            overflow: hidden;
+        }
+
+        .container form .form {
+            position: relative;
+            background-color: #fff;
+            transition: 0.3s ease;
+            width: 100%;
+        }
+
+        .container form .title {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 16px;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .container form .fields {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .input-field {
+            display: flex;
+            width: 100%;
+            flex-direction: column;
+            margin: 10px 0;
+        }
+
+        .input-field label {
+            font-size: 12px;
+            font-weight: 500;
+            color: #2e2e2e;
+        }
+
+        .input-field input, 
+        .input-field select {
+            outline: none;
+            font-size: 14px;
+            font-weight: 400;
+            color: #333;
+            border-radius: 5px;
+            border: 1px solid #aaa;
+            padding: 0 15px;
+            height: 42px;
+            margin: 8px 0;
+        }
+
+        .input-field input:focus,
+        .input-field select:focus {
+            box-shadow: 0 3px 6px rgba(0,0,0,0.13);
+        }
+
+        .container form button, 
+        .backBtn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 45px;
+            max-width: 200px;
+            width: 100%;
+            border: none;
+            outline: none;
+            color: #fff;
+            border-radius: 5px;
+            margin: 25px 0;
+            background-color: #4070f4;
+            transition: all 0.3s linear;
+            cursor: pointer;
+        }
+
+        .container form .btnText {
+            font-size: 14px;
+            font-weight: 400;
+        }
+
+        form button:hover {
+            background-color: #265df2;
+        }
+
+        form button i,
+        form .backBtn i {
+            margin: 0 6px;
+        }
+
+        form .backBtn i {
+            transform: rotate(180deg);
+        }
+
+        form .buttons {
+            display: flex;
+            align-items: center;
+        }
+
+        form .buttons button, 
+        .backBtn {
+            margin-right: 14px;
+        }
+
+        @media (max-width: 750px) {
+            .container form {
+                overflow-y: scroll;
+            }
+            .container form::-webkit-scrollbar {
+               display: none;
+            }
+        }
+
+        #message {
+            display: none;
+            padding: 10px;
+            margin-top: 15px;
+            border-radius: 5px;
+            color: #fff;
+        }
+
+        /* Preview Container */
+        .preview-container {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #f7f7f7;
+            border-radius: 6px;
+            width: 100%;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+        }
+
+        .preview-container table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .preview-container th, 
+        .preview-container td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+            font-size: 14px;
+        }
+
+        .preview-container th {
+            background-color: #4070f4;
+            color: #fff;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>Transaction Data Entry</header>
+
+        <form id="transactionForm">
+            <div class="form">
+                <div class="details personal">
+                    <span class="title">Transaction Details</span>
+
+                    <div class="fields">
+                        <!-- Updated Form Fields -->
+                        <div class="input-field">
+                            <label for="entry_date">Date</label>
+                            <input type="date" id="entry_date" name="Date" required />
+                        </div>
+                        <div class="input-field">
+                            <label for="entry_particular">Particular</label>
+                            <input type="text" id="entry_particular" name="Particular" placeholder="Enter particular" required />
+                        </div>
+                        <div class="input-field">
+                            <label for="entry_receiptMethod">Receipt Method</label>
+                            <input type="text" id="entry_receiptMethod" name="ReceiptMethod" placeholder="Enter receipt method" required />
+                        </div>
+                        <div class="input-field">
+                            <label for="entry_amount">Amount</label>
+                            <input type="number" id="entry_amount" name="Amount" placeholder="Enter amount" required />
+                        </div>
+                        <div class="input-field">
+                            <label for="entry_description">Description</label>
+                            <input type="text" id="entry_description" name="Description" placeholder="Enter description" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="buttons">
+                    <button type="submit" id="submit-button">
+                        <span class="btnText">Submit</span>
+                    </button>
+                </div>
+
+                <div id="message"></div>
+            </div>
+        </form>
+    </div>
+
+    <!-- Preview Container -->
+    <div class="preview-container">
+        <table>
+            <tr>
+                <th>1. Date</th>
+                <th>2. Particular</th>
+                <th>3. Receipt Method</th>
+                <th>4. Amount</th>
+                <th>5. Description</th>
+            </tr>
+            <tr>
+                <td id="preview_date"></td>
+                <td id="preview_particular"></td>
+                <td id="preview_receiptMethod"></td>
+                <td id="preview_amount"></td>
+                <td id="preview_description"></td>
+            </tr>
+        </table>
+    </div>
+
+    <script>
+        // Function to update preview
+        function updatePreview() {
+            document.getElementById("preview_date").textContent = document.getElementById("entry_date").value || "N/A";
+            document.getElementById("preview_particular").textContent = document.getElementById("entry_particular").value || "N/A";
+            document.getElementById("preview_receiptMethod").textContent = document.getElementById("entry_receiptMethod").value || "N/A";
+            document.getElementById("preview_amount").textContent = document.getElementById("entry_amount").value || "N/A";
+            document.getElementById("preview_description").textContent = document.getElementById("entry_description").value || "N/A";
+        }
+
+        // Add event listeners to form inputs
+        document.getElementById("entry_date").addEventListener("input", updatePreview);
+        document.getElementById("entry_particular").addEventListener("input", updatePreview);
+        document.getElementById("entry_receiptMethod").addEventListener("input", updatePreview);
+        document.getElementById("entry_amount").addEventListener("input", updatePreview);
+        document.getElementById("entry_description").addEventListener("input", updatePreview);
+
+        // Form submission handling
+        document.getElementById("transactionForm").addEventListener("submit", function (e) {
+            e.preventDefault(); // Prevent the default form submission
+            document.getElementById("message").textContent = "Submitting..";
+            document.getElementById("message").style.display = "block";
+            document.getElementById("submit-button").disabled = true;
+
+            // Collect the form data
+            var formData = new FormData(this);
+            var keyValuePairs = [];
+            for (var pair of formData.entries()) {
+                keyValuePairs.push(pair[0] + "=" + encodeURIComponent(pair[1]));
+            }
+
+            var formDataString = keyValuePairs.join("&");
+
+            // Send a POST request to your Google Apps Script
+            fetch(
+                "https://script.google.com/macros/s/AKfycbx2SM2bVehrDge5orGWSIVUPUSfSS5Is_qhQQdvGixjeHZVEsVP-BtP107Jo_tfaO7o/exec",
+                {
+                    redirect: "follow",
+                    method: "POST",
+                    body: formDataString,
+                    headers: {
+                        "Content-Type": "text/plain;charset=utf-8",
+                    },
+                }
+            )
+                .then(function (response) {
+                    if (response.ok) {
+                        return response.json(); // Assuming your script returns JSON response
+                    } else {
+                        throw new Error("Failed to submit the form.");
+                    }
+                })
+                .then(function (data) {
+                    document.getElementById("message").textContent = "Data submitted successfully!";
+                    document.getElementById("message").style.display = "block";
+                    document.getElementById("message").style.backgroundColor = "green";
+                    document.getElementById("message").style.color = "beige";
+                    document.getElementById("submit-button").disabled = false;
+                    document.getElementById("transactionForm").reset();
+
+                    // Reset the preview
+                    updatePreview();
+
+                    setTimeout(function () {
+                        document.getElementById("message").textContent = "";
+                        document.getElementById("message").style.display = "none";
+                    }, 2600);
+                })
+                .catch(function (error) {
+                    console.error(error);
+                    document.getElementById("message").textContent = "An error occurred while submitting the form.";
+                    document.getElementById("message").style.display = "block";
+                });
+        });
+    </script>
+</body>
+</html>
