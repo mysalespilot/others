@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Sales Summary</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .login-container, .summary-container {
+            display: none;
+            margin-top: 20px;
+        }
+        .table-container {
+            margin-top: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Customer Sales Summary</h1>
+
+    <!-- Login Form -->
+    <div class="login-container" id="login-container">
+        <h2>Login</h2>
+        <form id="login-form">
+            <label for="sap-code">Enter SAP Code:</label>
+            <input type="text" id="sap-code" name="sap-code" required>
+            <button type="submit">Login</button>
+        </form>
+    </div>
+
+    <!-- Sales Summary Display -->
+    <div class="summary-container" id="summary-container">
+        <h2>Sales Summary for Customer</h2>
+        <div id="customer-info"></div>
+        <div class="table-container">
+            <table id="summary-table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>SKU Code</th>
+                        <th>SKU Name</th>
+                        <th>Quantity</th>
+                        <th>Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Data will be populated here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // Placeholder for Excel Data (you will fetch this from Excel backend)
+        const excelData = [
+            { date: '2024-10-01', sapCode: 'CUST001', customerName: 'Customer A', city: 'City X', district: 'District Y', state: 'State Z', subzone: 'Subzone 1', zone: 'Zone A', skuCode: 'SKU123', skuName: 'Product 1', quantity: 10, value: 500 },
+            { date: '2024-10-02', sapCode: 'CUST001', customerName: 'Customer A', city: 'City X', district: 'District Y', state: 'State Z', subzone: 'Subzone 1', zone: 'Zone A', skuCode: 'SKU124', skuName: 'Product 2', quantity: 5, value: 300 },
+            // Add more data entries here
+        ];
+
+        const loginForm = document.getElementById('login-form');
+        const loginContainer = document.getElementById('login-container');
+        const summaryContainer = document.getElementById('summary-container');
+        const summaryTable = document.getElementById('summary-table').getElementsByTagName('tbody')[0];
+        const customerInfo = document.getElementById('customer-info');
+
+        // Show login form on page load
+        loginContainer.style.display = 'block';
+
+        loginForm.addEventListener('submit', function (event) {
+            event.preventDefault();
+            const sapCode = document.getElementById('sap-code').value;
+
+            // Filter Excel data based on SAP code
+            const customerData = excelData.filter(row => row.sapCode === sapCode);
+
+            if (customerData.length > 0) {
+                // Hide login, show summary
+                loginContainer.style.display = 'none';
+                summaryContainer.style.display = 'block';
+
+                // Display customer information (name, city, etc.)
+                const customer = customerData[0];
+                customerInfo.innerHTML = `<strong>Customer:</strong> ${customer.customerName} <br>
+                                          <strong>City:</strong> ${customer.city}, <strong>State:</strong> ${customer.state}`;
+
+                // Populate the sales summary table
+                summaryTable.innerHTML = ''; // Clear any previous data
+                customerData.forEach(row => {
+                    const newRow = summaryTable.insertRow();
+                    newRow.insertCell(0).innerText = row.date;
+                    newRow.insertCell(1).innerText = row.skuCode;
+                    newRow.insertCell(2).innerText = row.skuName;
+                    newRow.insertCell(3).innerText = row.quantity;
+                    newRow.insertCell(4).innerText = row.value;
+                });
+            } else {
+                alert('Invalid SAP Code');
+            }
+        });
+    </script>
+
+</body>
+</html>
